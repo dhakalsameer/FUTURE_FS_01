@@ -233,6 +233,126 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      .photo-rotator {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .photo-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .photo-slide.active {
+        opacity: 1;
+      }
+
+      .role-rotator {
+        position: relative;
+        height: 1.5em;
+        overflow: hidden;
+      }
+
+      .role-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        transform: translateY(20px);
+      }
+
+      .role-item.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Parallax scrolling effect */
+      .parallax-element {
+        transition: transform 0.1s ease-out;
+      }
+
+      /* Progress bars */
+      .skill-progress {
+        height: 6px;
+        background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        border-radius: 3px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 1s ease-out;
+      }
+
+      .skill-progress.animate {
+        transform: scaleX(1);
+      }
+
+      /* Clean and modern styling - removed excessive effects */
+
+      /* Magnetic button effect */
+      .magnetic-btn {
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      /* Particle cursor */
+      .cursor-particle {
+        position: fixed;
+        pointer-events: none;
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        z-index: 9999;
+        opacity: 0;
+        animation: particleFade 1s ease-out forwards;
+      }
+
+      @keyframes particleFade {
+        0% { 
+          opacity: 1; 
+          transform: scale(0) translate(0, 0);
+        }
+        100% { 
+          opacity: 0; 
+          transform: scale(2) translate(var(--tx), var(--ty));
+        }
+      }
+
+      /* Typewriter cursor blink */
+      .cursor-blink {
+        animation: cursorBlink 1s step-end infinite;
+      }
+
+      @keyframes cursorBlink {
+        50% { opacity: 0; }
+      }
+
+      /* 3D card tilt */
+      .card-3d {
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+      }
+
+      /* Loading animation */
+      .loader {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--muted);
+        border-top: 3px solid var(--accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     </style>
   </head>
 
@@ -247,6 +367,7 @@
         <div class="hidden md:flex items-center gap-8">
           <a href="#home" class="hover:accent transition-colors duration-300 font-medium">Home</a>
           <a href="#about-skills" class="hover:accent transition-colors duration-300 font-medium">About</a>
+          <a href="#design-principles" class="hover:accent transition-colors duration-300 font-medium">Principles</a>
           <a href="#projects" class="hover:accent transition-colors duration-300 font-medium">Projects</a>
           <a href="#certifications" class="hover:accent transition-colors duration-300 font-medium">Certifications</a>
           <a href="#contact" class="hover:accent transition-colors duration-300 font-medium">Contact</a>
@@ -275,7 +396,17 @@
               Hi, I'm <span class="gradient-text">{{ profile.full_name }}</span>
             </h1>
             <div class="text-2xl md:text-3xl accent font-semibold">
+              {% if roles %}
+              <div class="role-rotator" id="roleRotator">
+                {% for role in roles %}
+                <div class="role-item {% if forloop.first %}active{% endif %}" data-role="{{ forloop.counter0 }}">
+                  {{ role.title }}
+                </div>
+                {% endfor %}
+              </div>
+              {% else %}
               <span class="typing-effect" id="typingText">{{ profile.title }}</span>
+              {% endif %}
             </div>
           </div>
           
@@ -283,12 +414,12 @@
 
           <div class="flex flex-wrap gap-4">
             <a href="#projects"
-               class="hero-gradient text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform duration-300 shadow-lg">
+               class="hero-gradient text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform duration-300 shadow-lg magnetic-btn">
               <i class="fas fa-briefcase mr-2"></i> View Projects
             </a>
             {% if profile.resume %}
             <a href="{{ profile.resume.url }}" download
-               class="border-2 border-[var(--accent)] px-8 py-4 rounded-xl font-semibold hover:bg-[var(--accent)] hover:text-white transition-all duration-300">
+               class="border-2 border-[var(--accent)] px-8 py-4 rounded-xl font-semibold hover:bg-[var(--accent)] hover:text-white transition-all duration-300 magnetic-btn">
               <i class="fas fa-download mr-2"></i> Download Resume
             </a>
             {% endif %}
@@ -318,12 +449,30 @@
         </div>
 
         <div class="flex justify-center relative">
-          <div class="relative w-80 h-80">
-            {% for photo in photos %}
-            <img src="{{ photo.image.url }}"
-                 class="w-full h-full object-cover rounded-3xl shadow-2xl animate-float" 
-                 alt="{{ profile.full_name }}" />
-            {% endfor %}
+          <div class="relative w-80 h-80 parallax-element" data-speed="0.3">
+            <div class="photo-rotator w-full h-full rounded-3xl shadow-2xl animate-float">
+              {% for photo in photos %}
+              <div class="photo-slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}">
+                <img src="{{ photo.image.url }}"
+                     class="w-full h-full object-cover rounded-3xl hover:brightness-110 transition-all duration-300" 
+                     alt="{{ profile.full_name }} - Photo {{ forloop.counter }}"
+                     title="Click to view full size" />
+              </div>
+              {% empty %}
+              <!-- Default placeholder if no photos -->
+              <div class="photo-slide active w-full h-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-light)] flex items-center justify-center rounded-3xl">
+                <i class="fas fa-user text-6xl text-white"></i>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- Photo indicators -->
+            {% if photos %}
+            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {% for photo in photos %}
+              <button class="photo-indicator w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-colors {% if forloop.first %}bg-white{% endif %}" data-slide="{{ forloop.counter0 }}"></button>
+              {% endfor %}
+            </div>
+            {% endif %}
             <!-- Floating particles effect -->
             <div class="absolute -top-4 -right-4 w-8 h-8 bg-[var(--accent)] rounded-full opacity-60 animate-pulse-slow"></div>
             <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-[var(--accent-light)] rounded-full opacity-60 animate-pulse-slow" style="animation-delay: 1s;"></div>
@@ -358,19 +507,114 @@
         
         <div class="space-y-6">
           <h2 class="text-4xl font-bold gradient-text">Skills</h2>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {% for skill in skills %}
-            <div class="card p-4 text-center skill-icon hover:shadow-xl">
-              {% if skill.icon %}
-              <img src="{{ skill.icon.url }}" alt="{{ skill.name }}" class="w-12 h-12 mx-auto mb-2 rounded-lg">
-              {% else %}
-              <div class="w-12 h-12 mx-auto mb-2 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-bold">
-                {{ skill.name|slice:":1"|upper }}
+            <div class="skill-item" data-skill="{{ skill.name }}">
+              <div class="card p-4 skill-icon hover:shadow-xl card-3d">
+                <div class="flex items-center gap-4">
+                  {% if skill.icon %}
+                  <img src="{{ skill.icon.url }}" alt="{{ skill.name }}" class="w-12 h-12 rounded-lg">
+                  {% else %}
+                  <div class="w-12 h-12 bg-[var(--accent)] rounded-lg flex items-center justify-center text-white font-bold">
+                    {{ skill.name|slice:":1"|upper }}
+                  </div>
+                  {% endif %}
+                  <div class="flex-1">
+                    <div class="font-semibold mb-2">{{ skill.name }}</div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div class="skill-progress" style="width: 0%" data-progress="{% if forloop.counter0 == 0 %}90%{% elif forloop.counter0 == 1 %}85%{% elif forloop.counter0 == 2 %}95%{% elif forloop.counter0 == 3 %}80%{% elif forloop.counter0 == 4 %}88%{% else %}75%{% endif %}"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              {% endif %}
-              <div class="font-semibold">{{ skill.name }}</div>
             </div>
             {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESIGN PRINCIPLES -->
+    <section id="design-principles" class="py-24 section-fade">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold gradient-text mb-4">Design Principles</h2>
+          <p class="text-center text-lg muted">The philosophy behind my work</p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Principle 1: User-Centered -->
+          <div class="card p-8 text-center group hover:shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">User-Centered</h3>
+            <p class="muted leading-relaxed">Every design decision starts with understanding user needs, behaviors, and pain points to create intuitive experiences.</p>
+          </div>
+
+          <!-- Principle 2: Simplicity -->
+          <div class="card p-8 text-center group hover:shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-teal-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Simplicity First</h3>
+            <p class="muted leading-relaxed">Complex problems deserve elegant solutions. I strive for clarity and minimalism without sacrificing functionality.</p>
+          </div>
+
+          <!-- Principle 3: Consistency -->
+          <div class="card p-8 text-center group hover:shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Consistency</h3>
+            <p class="muted leading-relaxed">Cohesive patterns and visual language create predictable, learnable interfaces that build user trust.</p>
+          </div>
+
+          <!-- Principle 4: Accessibility -->
+          <div class="card p-8 text-center group hover:shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-universal-access"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Accessibility</h3>
+            <p class="muted leading-relaxed">Digital experiences should be usable by everyone, regardless of abilities, devices, or circumstances.</p>
+          </div>
+
+          <!-- Principle 5: Performance -->
+          <div class="card p-8 text-center group hover:shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Performance</h3>
+            <p class="muted leading-relaxed">Fast, responsive experiences are essential. Every optimization contributes to user satisfaction and engagement.</p>
+          </div>
+
+          <!-- Principle 6: Iteration -->
+          <div class="card p-8 text-center group hover:shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+            <div class="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform duration-300">
+              <i class="fas fa-sync-alt"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Continuous Improvement</h3>
+            <p class="muted leading-relaxed">Great products evolve. I embrace feedback and iteration to refine and perfect the user experience.</p>
+          </div>
+        </div>
+
+        <!-- Design Philosophy CTA -->
+        <div class="mt-16 text-center">
+          <div class="card p-8 max-w-3xl mx-auto relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-[var(--accent-light)] opacity-5"></div>
+            <div class="relative z-10">
+              <h3 class="text-2xl font-bold mb-4 gradient-text">Let's Build Something Meaningful</h3>
+              <p class="muted mb-6 text-lg">I believe great design is invisible - it just works. If you share these principles, let's collaborate on your next project.</p>
+              <a href="#contact" class="inline-flex items-center gap-2 hero-gradient text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform duration-300">
+                <i class="fas fa-comments"></i> Start a Conversation
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -403,7 +647,7 @@
               {% if project.tech_stack %}
               <div class="flex flex-wrap gap-2 mb-4">
                 {% for tech in project.tech_stack.split|slice:":3" %}
-                <span class="project-badge">{{ tech|strip }}</span>
+                <span class="project-badge">{{ tech }}</span>
                 {% endfor %}
               </div>
               {% endif %}
@@ -522,6 +766,11 @@
       </div>
     </section>
 
+    <!-- KEYBOARD NAVIGATION HINT -->
+    <div class="fixed bottom-4 right-4 text-xs muted opacity-50 hover:opacity-100 transition-opacity z-40">
+      <i class="fas fa-keyboard mr-1"></i> Press 1-6 to navigate
+    </div>
+
     <!-- FOOTER -->
     <footer class="py-8 border-t border-gray-200 dark:border-gray-700" style="background: var(--bg-soft);">
       <div class="max-w-7xl mx-auto px-6 text-center">
@@ -547,6 +796,9 @@
         </div>
         <p class="muted">© {% now "Y" %} {{ profile.full_name }}. All rights reserved.</p>
         <p class="text-sm muted mt-2">Built with Django & Tailwind CSS ❤️</p>
+        <div class="text-xs muted mt-4">
+          <i class="fas fa-rocket mr-1"></i> Enhanced with advanced JavaScript interactions
+        </div>
       </div>
     </footer>
 
@@ -637,6 +889,370 @@
             });
           }
         });
+      });
+
+      // Photo Rotation
+      function initPhotoRotation() {
+        const slides = document.querySelectorAll('.photo-slide');
+        const indicators = document.querySelectorAll('.photo-indicator');
+        
+        if (slides.length <= 1) return;
+        
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+          slides.forEach(slide => slide.classList.remove('active'));
+          indicators.forEach(indicator => indicator.classList.remove('bg-white'));
+          
+          slides[index].classList.add('active');
+          if (indicators[index]) {
+            indicators[index].classList.add('bg-white');
+          }
+        }
+        
+        function nextSlide() {
+          currentSlide = (currentSlide + 1) % slides.length;
+          showSlide(currentSlide);
+        }
+        
+        // Auto-rotate every 4 seconds
+        setInterval(nextSlide, 4000);
+        
+        // Manual control via indicators
+        indicators.forEach((indicator, index) => {
+          indicator.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+          });
+        });
+      }
+
+      // Role Rotation
+      function initRoleRotation() {
+        const roles = document.querySelectorAll('.role-item');
+        
+        if (roles.length <= 1) return;
+        
+        let currentRole = 0;
+        
+        function showRole(index) {
+          roles.forEach(role => role.classList.remove('active'));
+          roles[index].classList.add('active');
+        }
+        
+        function nextRole() {
+          currentRole = (currentRole + 1) % roles.length;
+          showRole(currentRole);
+        }
+        
+        // Auto-rotate every 3 seconds
+        setInterval(nextRole, 3000);
+      }
+
+      // Advanced JavaScript Features
+      class PortfolioJS {
+        constructor() {
+          this.init();
+        }
+
+        init() {
+          this.initParallax();
+          this.initMagneticButtons();
+          this.initScrollReveal();
+          this.initSkillBars();
+          this.initImageModal();
+          this.initKeyboardNavigation();
+          this.initCopyEmail();
+          this.initLazyLoading();
+          this.initSmoothScroll();
+        }
+
+        // Parallax scrolling effect
+        initParallax() {
+          const parallaxElements = document.querySelectorAll('.parallax-element');
+          
+          window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            
+            parallaxElements.forEach(element => {
+              const speed = element.dataset.speed || 0.5;
+              const yPos = -(scrolled * speed);
+              element.style.transform = `translateY(${yPos}px)`;
+            });
+          });
+        }
+
+        // Magnetic button effect
+        initMagneticButtons() {
+          const buttons = document.querySelectorAll('.magnetic-btn');
+          
+          buttons.forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+              const rect = button.getBoundingClientRect();
+              const x = e.clientX - rect.left - rect.width / 2;
+              const y = e.clientY - rect.top - rect.height / 2;
+              
+              button.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            
+            button.addEventListener('mouseleave', () => {
+              button.style.transform = 'translate(0, 0)';
+            });
+          });
+        }
+
+        // Particle cursor effect
+        initParticleCursor() {
+          document.addEventListener('click', (e) => {
+            this.createParticle(e.clientX, e.clientY);
+          });
+        }
+
+        createParticle(x, y) {
+          const particle = document.createElement('div');
+          particle.className = 'cursor-particle';
+          particle.style.left = x + 'px';
+          particle.style.top = y + 'px';
+          particle.style.setProperty('--tx', (Math.random() - 0.5) * 100 + 'px');
+          particle.style.setProperty('--ty', (Math.random() - 0.5) * 100 + 'px');
+          
+          document.body.appendChild(particle);
+          
+          setTimeout(() => particle.remove(), 1000);
+        }
+
+        // Enhanced scroll animations
+        initScrollReveal() {
+          const elements = document.querySelectorAll('.section-fade');
+          
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+              if (entry.isIntersecting) {
+                setTimeout(() => {
+                  entry.target.classList.add('visible');
+                }, index * 100);
+              }
+            });
+          }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+          });
+          
+          elements.forEach(element => observer.observe(element));
+        }
+
+        // Animated skill bars
+        initSkillBars() {
+          const skillBars = document.querySelectorAll('.skill-progress');
+          
+          const animateSkillBars = () => {
+            skillBars.forEach(bar => {
+              const rect = bar.getBoundingClientRect();
+              const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+              
+              if (isVisible && !bar.classList.contains('animate')) {
+                const progress = bar.dataset.progress || '80%';
+                bar.style.width = progress;
+                bar.classList.add('animate');
+              }
+            });
+          };
+          
+          window.addEventListener('scroll', animateSkillBars);
+          animateSkillBars(); // Initial check
+        }
+
+        // Removed text scramble effect for cleaner experience
+
+        // Image modal for viewing photos
+        initImageModal() {
+          const photos = document.querySelectorAll('.photo-slide img');
+          
+          photos.forEach(photo => {
+            photo.style.cursor = 'pointer';
+            photo.addEventListener('click', () => {
+              this.openImageModal(photo.src, photo.alt);
+            });
+          });
+        }
+
+        openImageModal(src, alt) {
+          // Remove existing modal if any
+          const existingModal = document.querySelector('.image-modal');
+          if (existingModal) existingModal.remove();
+          
+          // Create modal
+          const modal = document.createElement('div');
+          modal.className = 'image-modal fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300';
+          modal.innerHTML = `
+            <div class="relative max-w-4xl max-h-[90vh] mx-4">
+              <img src="${src}" alt="${alt}" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+              <button class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors modal-close">
+                <i class="fas fa-times"></i>
+              </button>
+              <div class="absolute bottom-4 left-4 text-white bg-black/50 backdrop-blur-sm px-3 py-2 rounded">
+                ${alt}
+              </div>
+            </div>
+          `;
+          
+          document.body.appendChild(modal);
+          
+          // Animate in
+          setTimeout(() => modal.classList.remove('opacity-0'), 10);
+          
+          // Close handlers
+          const closeHandlers = () => {
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.remove(), 300);
+          };
+          
+          modal.querySelector('.modal-close').addEventListener('click', closeHandlers);
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeHandlers();
+          });
+          
+          // Keyboard close
+          const keyHandler = (e) => {
+            if (e.key === 'Escape') {
+              closeHandlers();
+              document.removeEventListener('keydown', keyHandler);
+            }
+          };
+          document.addEventListener('keydown', keyHandler);
+        }
+
+        // Keyboard navigation
+        initKeyboardNavigation() {
+          const sections = ['home', 'about-skills', 'design-principles', 'projects', 'certifications', 'contact'];
+          
+          document.addEventListener('keydown', (e) => {
+            if (e.key >= '1' && e.key <= '6') {
+              const index = parseInt(e.key) - 1;
+              if (sections[index]) {
+                document.getElementById(sections[index]).scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          });
+        }
+
+        // Copy email to clipboard
+        initCopyEmail() {
+          const emailLink = document.querySelector('a[href^="mailto:"]');
+          
+          if (emailLink) {
+            emailLink.addEventListener('click', (e) => {
+              e.preventDefault();
+              const email = emailLink.href.replace('mailto:', '');
+              
+              navigator.clipboard.writeText(email).then(() => {
+                this.showNotification('Email copied to clipboard!');
+                window.location.href = emailLink.href;
+              });
+            });
+          }
+        }
+
+        // Show notification
+        showNotification(message) {
+          const notification = document.createElement('div');
+          notification.className = 'fixed top-24 right-6 bg-[var(--accent)] text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse-slow';
+          notification.textContent = message;
+          
+          document.body.appendChild(notification);
+          
+          setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Custom cursor
+        initCustomCursor() {
+          if (window.innerWidth > 768) {
+            const cursor = document.createElement('div');
+            cursor.className = 'fixed w-4 h-4 bg-[var(--accent)] rounded-full pointer-events-none z-50 mix-blend-difference';
+            cursor.style.transition = 'transform 0.1s ease-out';
+            document.body.appendChild(cursor);
+            
+            document.addEventListener('mousemove', (e) => {
+              cursor.style.left = e.clientX + 'px';
+              cursor.style.top = e.clientY + 'px';
+            });
+            
+            // Add hover effect for interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .card');
+            interactiveElements.forEach(element => {
+              element.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+              });
+              element.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+              });
+            });
+          }
+        }
+
+        // Lazy loading for images
+        initLazyLoading() {
+          const images = document.querySelectorAll('img[data-src]');
+          
+          const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('opacity-0');
+                imageObserver.unobserve(img);
+              }
+            });
+          });
+          
+          images.forEach(img => imageObserver.observe(img));
+        }
+
+        // Enhanced smooth scroll
+        initSmoothScroll() {
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+              e.preventDefault();
+              const target = document.querySelector(anchor.getAttribute('href'));
+              
+              if (target) {
+                const offset = 80; // Account for fixed header
+                const targetPosition = target.offsetTop - offset;
+                
+                window.scrollTo({
+                  top: targetPosition,
+                  behavior: 'smooth'
+                });
+                
+                // Update URL without page jump
+                history.pushState(null, null, anchor.getAttribute('href'));
+              }
+            });
+          });
+        }
+
+        // Performance monitor
+        initPerformanceMonitor() {
+          if ('performance' in window) {
+            window.addEventListener('load', () => {
+              const perfData = performance.getEntriesByType('navigation')[0];
+              const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+              
+              if (loadTime > 1000) {
+                console.log(`Page loaded in ${loadTime}ms - Consider optimization`);
+              }
+            });
+          }
+        }
+      }
+
+      // Initialize dynamic elements
+      document.addEventListener('DOMContentLoaded', function() {
+        initPhotoRotation();
+        initRoleRotation();
+        
+        // Initialize advanced features
+        new PortfolioJS();
       });
 
       // Form submission feedback
