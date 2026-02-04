@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Project
+from .forms import ContactForm
 # Create your views here.
 
 def home(request):
@@ -14,4 +15,15 @@ def projects(request):
 
 
 def contact(request):
-    return render(request, "contact.html")
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, "contact.html", {
+                "form": ContactForm(),
+                "success": True
+            })
+    else:
+        form = ContactForm()
+
+    return render(request, "contact.html", {"form": form})
