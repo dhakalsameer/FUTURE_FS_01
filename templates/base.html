@@ -1,33 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Sameer Dhakal – Full Stack Web Developer specializing in Django backend development."
+    />
+    <meta
+      name="keywords"
+      content="Sameer Dhakal, Django Developer, Full Stack Developer, Python"
+    />
+    <meta name="author" content="Sameer Dhakal" />
+
     <title>{% block title %}Sameer Dhakal | Portfolio{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
     <!-- NAVBAR -->
     <nav>
-        <a href="/">Home</a>
-        <a href="/about/">About</a>
-        <a href="/projects/">Projects</a>
-        <a href="/contact/">Contact</a>
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/projects/">Projects</a>
+      <a href="/contact/">Contact</a>
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    <main>{% block content %} {% endblock %}</main>
 
     <!-- FOOTER -->
     <footer>
-        <p>© 2026 Sameer Dhakal</p>
+      <p>© 2026 Sameer Dhakal</p>
     </footer>
-
-</body>
+  </body>
 </html>
