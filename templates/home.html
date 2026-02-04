@@ -1,8 +1,207 @@
-{% extends "base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ profile.full_name }} | {{ profile.title }}</title>
 
-{% block title %}Home | Sameer Dhakal{% endblock %}
+    <!-- SEO -->
+    <meta name="description" content="{{ profile.bio|truncatechars:160 }}" />
+    <meta name="author" content="{{ profile.full_name }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-{% block content %}
-<h1>Hello, I’m Sameer Dhakal 👋</h1>
-<p>Backend-focused Full Stack Developer using Django</p>
-{% endblock %}
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400;600&family=Fira+Code:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+              fira: ["Fira Code", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        font-family: Inter, sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      [data-theme="dark"] {
+        --bg: #020617;
+        --bg-soft: #020617;
+        --card: #0b1220;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --accent: #6366f1;
+      }
+
+      [data-theme="light"] {
+        --bg: #f8fafc;
+        --bg-soft: #ffffff;
+        --card: #ffffff;
+        --text: #020617;
+        --muted: #475569;
+        --accent: #4f46e5;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .muted { color: var(--muted); }
+      .accent { color: var(--accent); }
+
+      .card {
+        background: var(--card);
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        transition: transform 0.25s ease;
+      }
+
+      .card:hover { transform: translateY(-4px); }
+    </style>
+  </head>
+
+  <body data-theme="dark">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 w-full z-50 backdrop-blur border-b border-black/10 dark:border-white/10"
+         style="background: var(--bg-soft)">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <span class="font-bold accent">{{ profile.full_name }}</span>
+
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#home" class="hover:accent">Home</a>
+          <a href="#about-skills" class="hover:accent">About</a>
+          <a href="#projects" class="hover:accent">Projects</a>
+          <a href="#certifications" class="hover:accent">Certifications</a>
+          <a href="#contact" class="hover:accent">Contact</a>
+
+          <button id="themeToggle"
+            class="border border-black/10 dark:border-white/20 px-3 py-1 rounded text-sm">
+            Toggle Theme
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="min-h-screen flex items-center pt-32">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+        <div class="space-y-6">
+          <h1 class="text-5xl font-bold">
+            Hi, I’m <span class="accent">{{ profile.full_name }}</span>
+          </h1>
+          <p class="text-xl muted">{{ profile.bio }}</p>
+
+          <div class="flex gap-4">
+            <a href="#projects"
+               class="bg-[var(--accent)] text-white px-6 py-3 rounded-xl">
+              View Projects
+            </a>
+            <a href="{{ profile.resume.url }}"
+               class="border border-[var(--accent)] px-6 py-3 rounded-xl">
+              Download Resume
+            </a>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          {% for photo in photos %}
+          <img src="{{ photo.image.url }}"
+               class="w-72 h-72 object-cover rounded-3xl shadow-xl" />
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT + SKILLS -->
+    <section id="about-skills" class="py-24">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-3xl font-semibold mb-4">About Me</h2>
+          <p class="muted">{{ profile.about }}</p>
+        </div>
+        <div>
+          <h2 class="text-3xl font-semibold mb-4">Skills</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {% for skill in skills %}
+            <div class="card p-4 text-center">{{ skill.name }}</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-24 bg-black/5 dark:bg-white/5">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-semibold mb-12 text-center">Projects</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {% for project in projects %}
+          <div class="card overflow-hidden">
+            <img src="{{ project.image.url }}" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h3 class="text-xl font-bold">{{ project.title }}</h3>
+              <p class="muted mt-2">{{ project.description }}</p>
+              <div class="flex gap-4 mt-4">
+                <a href="{{ project.github_link }}" target="_blank" class="accent">GitHub</a>
+                {% if project.live_link %}
+                <a href="{{ project.live_link }}" target="_blank" class="accent">Live</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24">
+      <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl font-semibold mb-6">Contact</h2>
+
+        <form method="POST" class="grid gap-4">
+          {% csrf_token %}
+          <input name="name" placeholder="Your Name" class="p-3 rounded" />
+          <input name="email" placeholder="Your Email" class="p-3 rounded" />
+          <textarea name="message" rows="5" placeholder="Your Message" class="p-3 rounded"></textarea>
+          <button class="bg-[var(--accent)] text-white px-6 py-3 rounded">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="py-8 text-center muted">
+      © {{ now|date:"Y" }} {{ profile.full_name }}
+    </footer>
+
+    <!-- THEME TOGGLE -->
+    <script>
+      const btn = document.getElementById("themeToggle");
+      const root = document.body;
+      btn.onclick = () => {
+        const next = root.dataset.theme === "dark" ? "light" : "dark";
+        root.dataset.theme = next;
+      };
+    </script>
+
+  </body>
+</html>
