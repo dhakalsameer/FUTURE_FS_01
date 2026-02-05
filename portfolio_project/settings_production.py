@@ -23,7 +23,12 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
 ]
 
-# Add Render domain
+# Add Render domain from environment variable
+render_external_url = os.environ.get('RENDER_EXTERNAL_URL', '').replace('https://', '').replace('http://', '')
+if render_external_url:
+    ALLOWED_HOSTS.append(render_external_url)
+
+# Add Render domain from service ID
 if os.environ.get('RENDER_SERVICE_ID'):
     render_domain = f"{os.environ.get('RENDER_SERVICE_ID')}.onrender.com"
     ALLOWED_HOSTS.append(render_domain)
