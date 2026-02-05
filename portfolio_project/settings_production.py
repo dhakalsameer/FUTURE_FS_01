@@ -18,7 +18,7 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # PythonAnywhere specific configuration
 ALLOWED_HOSTS = [
-    'yourusername.pythonanywhere.com',  # Replace with your PythonAnywhere username
+    'sameer07.pythonanywhere.com',  # Your PythonAnywhere username
     'localhost',
     '127.0.0.1',
 ]

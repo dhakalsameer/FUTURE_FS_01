@@ -17,9 +17,9 @@ cd "$SCRIPT_DIR"
 
 echo "📁 Current directory: $(pwd)"
 
-# Activate virtual environment (update path as needed)
-if [[ -d "/home/$USER/.virtualenvs/portfolioenv" ]]; then
-    source /home/$USER/.virtualenvs/portfolioenv/bin/activate
+# Activate virtual environment
+if [[ -d "/home/sameer07/.virtualenvs/portfolioenv" ]]; then
+    source /home/sameer07/.virtualenvs/portfolioenv/bin/activate
     echo "✅ Virtual environment activated"
 else
     echo "⚠️  Virtual environment not found. Please create it first."
@@ -41,10 +41,10 @@ python manage.py migrate --settings=portfolio_project.settings_production
 
 # Restart the web app
 echo "🔄 Restarting web app..."
-touch /var/www/www_yourusername_pythonanywhere_com_wsgi.py 2>/dev/null || echo "⚠️  Could not restart web app automatically"
+touch /var/www/www_sameer07_pythonanywhere_com_wsgi.py 2>/dev/null || echo "⚠️  Could not restart web app automatically"
 
 echo "✅ Deployment completed!"
-echo "🌐 Your site should be available at: https://yourusername.pythonanywhere.com"
+echo "🌐 Your site should be available at: https://sameer07.pythonanywhere.com"
 echo ""
 echo "📝 Next steps:"
 echo "   1. Update your username in the WSGI file"
