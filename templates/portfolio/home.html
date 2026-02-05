@@ -1034,6 +1034,143 @@
         0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
         100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
       }
+
+      /* Resume Modal Styles */
+      .resume-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        background: radial-gradient(circle at center, transparent, var(--overlay));
+      }
+
+      .resume-modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .resume-modal-content {
+        position: relative;
+        width: 90vw;
+        max-width: 900px;
+        height: 90vh;
+        background: var(--card);
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        transform: scale(0.8) rotateX(15deg);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        transform-style: preserve-3d;
+        perspective: 2000px;
+        overflow: hidden;
+        border: 2px solid var(--accent);
+      }
+
+      .resume-modal.active .resume-modal-content {
+        transform: scale(1) rotateX(0);
+      }
+
+      .resume-header {
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .resume-header h3 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .resume-body {
+        height: calc(100% - 80px);
+        padding: 20px;
+        overflow: auto;
+      }
+
+      .resume-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 10px;
+      }
+
+      .resume-controls {
+        position: absolute;
+        bottom: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        transition-delay: 0.3s;
+      }
+
+      .resume-modal.active .resume-controls {
+        opacity: 1;
+        bottom: 30px;
+      }
+
+      .resume-btn {
+        padding: 12px 24px;
+        border-radius: 50px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        font-weight: 600;
+      }
+
+      .resume-btn:hover {
+        transform: scale(1.1) rotateZ(5deg);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      }
+
+      .resume-btn:active {
+        transform: scale(0.95);
+      }
+
+      .close-resume {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        border: 2px solid rgba(255,255,255,0.3);
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        font-size: 18px;
+        backdrop-filter: blur(10px);
+        z-index: 10;
+      }
+
+      .close-resume:hover {
+        transform: scale(1.15);
+        background: rgba(255,255,255,0.3);
+        border-color: rgba(255,255,255,0.5);
+      }
     </style>
   </head>
 
@@ -1099,8 +1236,12 @@
               <i class="fas fa-briefcase mr-2 wave"></i> View Projects
             </a>
             {% if profile.resume %}
-            <a href="{{ profile.resume.url }}" download
+            <button onclick="openResumeModal()" 
                class="border-2 border-[var(--accent)] px-8 py-4 rounded-xl font-semibold hover:bg-[var(--accent)] hover:text-white transition-all duration-300 magnetic-btn elastic-btn shimmer">
+              <i class="fas fa-eye mr-2 wave"></i> View Resume
+            </button>
+            <a href="{{ profile.resume.url }}" download
+               class="hero-gradient text-white px-8 py-4 rounded-xl font-semibold hover:scale-105 transition-transform duration-300 shadow-lg magnetic-btn elastic-btn ribbon">
               <i class="fas fa-download mr-2 wave"></i> Download Resume
             </a>
             {% endif %}
@@ -2314,6 +2455,67 @@
         }, 3000);
       });
     </script>
+
+    <!-- Resume Modal -->
+    {% if profile.resume %}
+    <div id="resumeModal" class="resume-modal">
+      <div class="resume-modal-content quantum-glow">
+        <div class="resume-header">
+          <h3><i class="fas fa-file-pdf mr-2"></i>My Resume</h3>
+          <button class="close-resume" onclick="closeResumeModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="resume-body">
+          <iframe src="{{ profile.resume.url }}" class="resume-iframe" title="Resume Preview"></iframe>
+        </div>
+        <div class="resume-controls">
+          <a href="{{ profile.resume.url }}" download class="resume-btn">
+            <i class="fas fa-download"></i> Download PDF
+          </a>
+          <button onclick="openResumeInNewTab()" class="resume-btn">
+            <i class="fas fa-external-link-alt"></i> Open in New Tab
+          </button>
+          <button onclick="closeResumeModal()" class="resume-btn">
+            <i class="fas fa-times"></i> Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Resume Modal Functions
+      function openResumeModal() {
+        const modal = document.getElementById('resumeModal');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeResumeModal() {
+        const modal = document.getElementById('resumeModal');
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+
+      function openResumeInNewTab() {
+        window.open('{{ profile.resume.url }}', '_blank');
+      }
+
+      // Close modal on escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeResumeModal();
+        }
+      });
+
+      // Close modal on background click
+      document.getElementById('resumeModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeResumeModal();
+        }
+      });
+    </script>
+    {% endif %}
 
   </body>
 </html>

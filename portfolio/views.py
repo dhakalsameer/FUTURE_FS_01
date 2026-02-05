@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.conf import settings
 from .models import Profile, Project, Skill, Role, ProfilePhoto, Certification
 
 
@@ -51,11 +52,11 @@ def contact_send_email(request):
             send_mail(
                 subject,
                 body,
-                "sameerdhakal1234@gmail.com",  # From
-                ["sameerdhakal1234@gmail.com"],  # To
+                settings.DEFAULT_FROM_EMAIL,  # From (your email)
+                [settings.DEFAULT_FROM_EMAIL],  # To (your email)
                 fail_silently=False,
             )
-            messages.success(request, "Your message has been sent!")
+            messages.success(request, "Your message has been sent successfully!")
         except Exception as e:
             messages.error(request, f"Error sending message: {str(e)}")
 
