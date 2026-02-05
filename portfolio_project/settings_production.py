@@ -16,32 +16,20 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-me-in-p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-# Render and PythonAnywhere configuration
+# Simple, long-lasting ALLOWED_HOSTS configuration
 ALLOWED_HOSTS = [
     'sameer07.pythonanywhere.com',  # Your PythonAnywhere username
     'localhost',
     '127.0.0.1',
+    'future-fs-01-a6ek.onrender.com',  # Your current Render domain
+    '.onrender.com',  # Wildcard for all Render domains
 ]
 
-# Add Render domain from environment variable
-render_external_url = os.environ.get('RENDER_EXTERNAL_URL', '').replace('https://', '').replace('http://', '')
-if render_external_url:
-    ALLOWED_HOSTS.append(render_external_url)
-
-# Add Render domain from service ID
-if os.environ.get('RENDER_SERVICE_ID'):
-    render_domain = f"{os.environ.get('RENDER_SERVICE_ID')}.onrender.com"
-    ALLOWED_HOSTS.append(render_domain)
-
-# Add all possible Render domains
-ALLOWED_HOSTS.extend([
-    'future-fs-01-a6ek.onrender.com',
-    '*.onrender.com'
-])
-
-# Add custom domain if you have one
-if os.environ.get('CUSTOM_DOMAIN'):
-    ALLOWED_HOSTS.append(os.environ.get('CUSTOM_DOMAIN'))
+# Allow any domain that starts with your service name
+import re
+http_host = os.environ.get('HTTP_HOST', '')
+if http_host and ('.onrender.com' in http_host or 'localhost' in http_host):
+    ALLOWED_HOSTS.append(http_host)
 
 # Application definition
 INSTALLED_APPS = [
