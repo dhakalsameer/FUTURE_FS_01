@@ -4,12 +4,9 @@ services:
     env: python
     plan: free
     runtime: python
-    pythonVersion: "3.10"
     buildCommand: pip install -r requirements.txt
     startCommand: bash start.sh
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: portfolio_project.settings_production
-      - key: PYTHON_VERSION
-        value: 3.10
     healthCheckPath: /
