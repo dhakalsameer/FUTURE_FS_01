@@ -691,6 +691,228 @@
         75% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
       }
 
+      /* Unique image type effects */
+      .image-wrapper {
+        position: relative;
+        display: inline-block;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .image-wrapper::before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: -1;
+      }
+
+      .image-wrapper:hover::before {
+        opacity: 1;
+        animation: shimmer 0.6s ease-out;
+      }
+
+      .photo-effect {
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .photo-wrapper {
+        border: 3px solid #6366f1;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+      }
+
+      .project-effect {
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .project-wrapper {
+        border: 3px solid #10b981;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+      }
+
+      .certification-effect {
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .certification-wrapper {
+        border: 3px solid #f59e0b;
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+      }
+
+      .skill-effect {
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+
+      .skill-wrapper {
+        border: 2px solid #8b5cf6;
+        box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+      }
+
+      /* Enhanced hover states for each type */
+      .photo-wrapper:hover {
+        border-color: #818cf8;
+        box-shadow: 0 5px 25px rgba(99, 102, 241, 0.4);
+      }
+
+      .project-wrapper:hover {
+        border-color: #34d399;
+        box-shadow: 0 5px 25px rgba(16, 185, 129, 0.4);
+      }
+
+      .certification-wrapper:hover {
+        border-color: #fbbf24;
+        box-shadow: 0 5px 25px rgba(245, 158, 11, 0.4);
+      }
+
+      .skill-wrapper:hover {
+        border-color: #a78bfa;
+        box-shadow: 0 5px 25px rgba(139, 92, 246, 0.3);
+      }
+
+      /* Unique click animations */
+      .photo-wrapper:active {
+        transform: scale(0.98) rotateZ(2deg);
+      }
+
+      .project-wrapper:active {
+        transform: scale(0.98) rotateZ(-2deg);
+      }
+
+      .certification-wrapper:active {
+        transform: scale(0.98) rotateZ(1deg);
+      }
+
+      .skill-wrapper:active {
+        transform: scale(0.98) rotateZ(-1deg);
+      }
+
+      /* Cosmic background effects */
+      .cosmic-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .cosmic-particle {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: var(--accent);
+        border-radius: 50%;
+        animation: cosmicFloat 20s infinite linear;
+      }
+
+      @keyframes cosmicFloat {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.8;
+        }
+        90% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* Aurora background effect */
+      .aurora-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+          var(--gradient-start) 0%, 
+          transparent 25%, 
+          var(--gradient-end) 50%, 
+          transparent 75%, 
+          var(--gradient-start) 100%);
+        background-size: 400% 400%;
+        animation: auroraShift 15s ease infinite;
+        pointer-events: none;
+        z-index: -2;
+      }
+
+      @keyframes auroraShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* Floating geometric shapes */
+      .floating-shape {
+        position: fixed;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.1;
+        animation: floatAndRotate 30s infinite ease-in-out;
+      }
+
+      @keyframes floatAndRotate {
+        0%, 100% {
+          transform: translate(0, 100vh) rotate(0deg) scale(0);
+        }
+        25% {
+          transform: translate(25vw, 75vh) rotate(90deg) scale(1);
+        }
+        50% {
+          transform: translate(50vw, 50vh) rotate(180deg) scale(1.5);
+        }
+        75% {
+          transform: translate(75vw, 25vh) rotate(270deg) scale(1);
+        }
+        90% {
+          transform: translate(100vw, 0vh) rotate(360deg) scale(0);
+        }
+      }
+
+      /* Enhanced card animations */
+      .card-hover-3d {
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        transform-style: preserve-3d;
+      }
+
+      .card-hover-3d:hover {
+        transform: perspective(1000px) rotateY(5deg) rotateX(-5deg) translateZ(20px);
+      }
+
+      /* Magnetic field effect */
+      .magnetic-field {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .magnetic-field::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, transparent 30%, var(--accent) 70%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        animation: magneticPulse 4s ease-in-out infinite;
+      }
+
+      @keyframes magneticPulse {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 0.1; }
+      }
+
       /* Wave animation */
       .wave {
         animation: wave 2.5s linear infinite;
@@ -1541,221 +1763,351 @@
 
         // Removed text scramble effect for cleaner experience
 
-        // Enhanced image modal for ALL images with same behavior as profile photos
+        // Enhanced image viewer for ALL images with better detection
         initImageModal() {
-          console.log('Initializing image modals for ALL images...');
+          console.log('Initializing universal image viewer...');
           
-          // Get ALL images in the portfolio
-          const allImages = document.querySelectorAll('img');
-          console.log('Found total images:', allImages.length);
-          
-          // Group images by type for navigation
-          const imageGroups = {
-            photo: document.querySelectorAll('.photo-slide img'),
-            project: document.querySelectorAll('#projects .card img'),
-            certification: document.querySelectorAll('#certifications .card img'),
-            skill: document.querySelectorAll('.skill-icon img')
-          };
-          
-          // Make ALL images clickable with the same enhanced modal behavior
-          allImages.forEach((img, globalIndex) => {
-            // Skip navigation icons and small UI images
-            if (img.closest('.modal-close') || img.closest('.modal-nav') || img.closest('.modal-download') || img.closest('.modal-fullscreen')) {
-              return;
-            }
+          // Wait for dynamic content to load
+          setTimeout(() => {
+            // Get ALL clickable images with better detection
+            const allClickableImages = document.querySelectorAll('img:not([alt*="icon"]):not([alt*="button"]):not([alt*="arrow"])');
+            console.log('Found clickable images:', allClickableImages.length);
             
-            // Determine image type
-            let type = 'other';
-            let typeIndex = 0;
+            // Group images by section with enhanced detection
+            const imageGroups = {
+              photo: Array.from(document.querySelectorAll('.photo-slide img')),
+              project: Array.from(document.querySelectorAll('#projects .card img')),
+              certification: Array.from(document.querySelectorAll('#certifications .card img')),
+              skill: Array.from(document.querySelectorAll('.skill-icon img'))
+            };
             
-            for (const [groupType, images] of Object.entries(imageGroups)) {
-              const index = Array.from(images).indexOf(img);
-              if (index !== -1) {
-                type = groupType;
-                typeIndex = index;
-                break;
+            console.log('Image groups:', imageGroups);
+            
+            // Make ALL images clickable with the same viewer behavior
+            allClickableImages.forEach((img, globalIndex) => {
+              // Skip modal-related images
+              if (img.closest('.image-viewer') || img.closest('.viewer-controls') || img.closest('.viewer-nav')) {
+                return;
               }
-            }
-            
-            img.style.cursor = 'pointer';
-            img.classList.add('image-zoom', 'elastic-scale');
-            img.title = 'Click to view full size';
-            
-            img.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log('Image clicked:', { src: img.src, alt: img.alt, type, index: typeIndex });
               
-              // ALL images get the same modal behavior with navigation
-              this.openEnhancedImageModal(img.src, img.alt, type, typeIndex, Array.from(imageGroups[type] || [img]));
+              // Determine image type more accurately
+              let type = 'image';
+              let typeIndex = 0;
+              let typeArray = [img];
+              
+              if (imageGroups.photo.includes(img)) {
+                type = 'photo';
+                typeIndex = imageGroups.photo.indexOf(img);
+                typeArray = imageGroups.photo;
+              } else if (imageGroups.project.includes(img)) {
+                type = 'project';
+                typeIndex = imageGroups.project.indexOf(img);
+                typeArray = imageGroups.project;
+              } else if (imageGroups.certification.includes(img)) {
+                type = 'certification';
+                typeIndex = imageGroups.certification.indexOf(img);
+                typeArray = imageGroups.certification;
+              } else if (imageGroups.skill.includes(img)) {
+                type = 'skill';
+                typeIndex = imageGroups.skill.indexOf(img);
+                typeArray = imageGroups.skill;
+              }
+              
+              // Add unique visual indicators
+              img.style.cursor = 'pointer';
+              img.classList.add('image-zoom', 'elastic-scale');
+              img.title = `Click to open ${type} viewer`;
+              img.setAttribute('data-image-type', type);
+              img.setAttribute('data-image-index', typeIndex);
+              
+              // Add unique hover effects based on type
+              this.addUniqueImageEffects(img, type);
+              
+              // Single click handler for all images
+              img.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log(`${type} image clicked:`, { src: img.src, alt: img.alt, index: typeIndex });
+                
+                // ALL images get the same viewer with navigation
+                this.openEnhancedImageModal(img.src, img.alt || `${type} image`, type, typeIndex, typeArray);
+              });
             });
-          });
+            
+            // Add visual enhancement to all clickable images
+            this.enhanceClickableImages();
+          }, 200);
+        }
+
+        // Add unique visual effects based on image type
+        addUniqueImageEffects(img, type) {
+          // Remove existing classes
+          img.classList.remove('photo-effect', 'project-effect', 'certification-effect', 'skill-effect');
           
-          // Add visual indicators to all clickable images
-          const clickableImages = document.querySelectorAll('img:not(.modal-close img):not(.modal-nav img):not(.modal-download img):not(.modal-fullscreen img)');
-          clickableImages.forEach(img => {
-            // Add subtle border or effect to show it's clickable
-            if (!img.closest('.modal-content')) {
-              img.style.transition = 'all 0.3s ease';
-              img.addEventListener('mouseenter', () => {
-                img.style.filter = 'brightness(1.1)';
-                img.style.transform = 'scale(1.05)';
-              });
-              img.addEventListener('mouseleave', () => {
-                img.style.filter = 'brightness(1)';
-                img.style.transform = 'scale(1)';
-              });
+          // Add type-specific effects
+          switch(type) {
+            case 'photo':
+              img.classList.add('photo-effect');
+              img.style.filter = 'sepia(0.1) contrast(1.1)';
+              break;
+            case 'project':
+              img.classList.add('project-effect');
+              img.style.filter = 'hue-rotate(5deg) saturate(1.2)';
+              break;
+            case 'certification':
+              img.classList.add('certification-effect');
+              img.style.filter = 'brightness(1.1) contrast(1.2)';
+              break;
+            case 'skill':
+              img.classList.add('skill-effect');
+              img.style.filter = 'saturate(1.3) hue-rotate(10deg)';
+              break;
+          }
+        }
+
+        // Enhance all clickable images with unique visual indicators
+        enhanceClickableImages() {
+          const clickableImages = document.querySelectorAll('img[data-image-type]');
+          
+          clickableImages.forEach((img, index) => {
+            if (img.closest('.modal-content')) return;
+            
+            // Add unique visual frame based on type
+            const type = img.getAttribute('data-image-type');
+            const wrapper = document.createElement('div');
+            wrapper.className = `image-wrapper ${type}-wrapper`;
+            wrapper.style.cssText = `
+              position: relative;
+              display: inline-block;
+              border-radius: 12px;
+              overflow: hidden;
+              transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            `;
+            
+            // Add type-specific border effects
+            switch(type) {
+              case 'photo':
+                wrapper.style.border = '3px solid #6366f1';
+                wrapper.style.boxShadow = '0 0 20px rgba(99, 102, 241, 0.3)';
+                break;
+              case 'project':
+                wrapper.style.border = '3px solid #10b981';
+                wrapper.style.boxShadow = '0 0 20px rgba(16, 185, 129, 0.3)';
+                break;
+              case 'certification':
+                wrapper.style.border = '3px solid #f59e0b';
+                wrapper.style.boxShadow = '0 0 20px rgba(245, 158, 11, 0.3)';
+                break;
+              case 'skill':
+                wrapper.style.border = '2px solid #8b5cf6';
+                wrapper.style.boxShadow = '0 0 15px rgba(139, 92, 246, 0.2)';
+                break;
             }
+            
+            // Wrap the image
+            img.parentNode.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+            
+            // Add hover enhancement
+            wrapper.addEventListener('mouseenter', () => {
+              wrapper.style.transform = 'scale(1.05) translateY(-5px)';
+              wrapper.style.filter = 'brightness(1.2)';
+              img.style.transform = 'scale(1.1)';
+            });
+            
+            wrapper.addEventListener('mouseleave', () => {
+              wrapper.style.transform = 'scale(1) translateY(0)';
+              wrapper.style.filter = 'brightness(1)';
+              img.style.transform = 'scale(1)';
+            });
+            
+            // Add click hint animation
+            setTimeout(() => {
+              wrapper.style.animation = 'pulse 2s ease-in-out infinite';
+              setTimeout(() => {
+                wrapper.style.animation = '';
+              }, 4000);
+            }, index * 200);
           });
         }
 
+        // In-page image viewer with unique animations
         openEnhancedImageModal(src, alt, type, index, imageArray) {
-          // Remove existing modal if any
-          const existingModal = document.querySelector('.enhanced-image-modal');
-          if (existingModal) existingModal.remove();
+          console.log('Opening in-page viewer for:', { src, alt, type, index });
           
-          // Create enhanced modal with SAME behavior for ALL image types
-          const modal = document.createElement('div');
-          modal.className = 'enhanced-image-modal fixed inset-0 z-50 flex items-center justify-center opacity-0 transition-all duration-500';
-          modal.style.background = 'var(--overlay)';
-          modal.style.backdropFilter = 'blur(12px)';
+          // Remove existing viewer if any
+          const existingViewer = document.querySelector('.image-viewer');
+          if (existingViewer) {
+            existingViewer.classList.remove('active');
+            setTimeout(() => existingViewer.remove(), 600);
+            return;
+          }
           
-          // Show navigation arrows for ALL image types if there are multiple images in that group
+          // Create unique in-page viewer
+          const viewer = document.createElement('div');
+          viewer.className = 'image-viewer';
+          
+          // Show navigation for ALL image types with multiple images
           const showNavigation = imageArray && imageArray.length > 1;
           
-          modal.innerHTML = `
-            <div class="relative max-w-6xl max-h-[90vh] mx-4 transform scale-95 transition-all duration-500 modal-content">
-              <!-- Image container with animations -->
-              <div class="relative">
-                <img src="${src}" alt="${alt}" class="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl image-zoom">
-                
-                <!-- Shimmer effect overlay -->
-                <div class="absolute inset-0 pointer-events-none shimmer rounded-2xl"></div>
-                
-                <!-- Navigation arrows for ALL image types -->
-                ${showNavigation ? `
-                  <button class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 modal-nav-prev" style="background: rgba(255,255,255,0.2); transition: all 0.3s;">
-                    <i class="fas fa-chevron-left"></i>
-                  </button>
-                  <button class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 modal-nav-next" style="background: rgba(255,255,255,0.2); transition: all 0.3s;">
-                    <i class="fas fa-chevron-right"></i>
-                  </button>
-                ` : ''}
-                
-                <!-- Close button with rotation animation -->
-                <button class="absolute top-4 right-4 w-12 h-12 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 hover:rotate-90 modal-close" style="background: rgba(255,255,255,0.2); transition: all 0.3s;">
-                  <i class="fas fa-times text-lg"></i>
-                </button>
-              </div>
+          viewer.innerHTML = `
+            <div class="image-viewer-content quantum-glow liquid-morph">
+              <img src="${src}" alt="${alt}" class="viewer-main-image fractal-zoom">
               
-              <!-- Info panel with gradient -->
-              <div class="absolute bottom-4 left-4 right-4 backdrop-blur-md rounded-xl p-4 ribbon" style="background: linear-gradient(to right, var(--overlay), var(--overlay) 50%, transparent);">
-                <h3 class="text-white font-bold text-lg mb-1">${alt}</h3>
-                <div class="flex items-center gap-4 text-white/80 text-sm">
-                  <span class="capitalize">${type}</span>
-                  <span>•</span>
-                  <span>Image ${index + 1} of ${showNavigation ? imageArray.length : 1}</span>
-                  ${showNavigation ? '<span>•</span><span>Use arrow keys to navigate</span>' : ''}
-                </div>
+              <!-- DNA helix decoration -->
+              <div class="dna-helix"></div>
+            </div>
+            
+            <!-- Navigation buttons for ALL types -->
+            ${showNavigation ? `
+              <button class="viewer-nav prev neon-pulse">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="viewer-nav next neon-pulse">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            ` : ''}
+            
+            <!-- Info panel -->
+            <div class="viewer-info">
+              <h3 class="text-white font-bold text-lg mb-1">${alt}</h3>
+              <div class="flex items-center gap-4 text-white/80 text-sm">
+                <span class="capitalize">${type}</span>
+                <span>•</span>
+                <span>Image ${index + 1} of ${showNavigation ? imageArray.length : 1}</span>
               </div>
-              
-              <!-- Action buttons -->
-              <div class="absolute top-4 left-4 flex gap-2">
-                <button class="w-10 h-10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 modal-download" style="background: rgba(255,255,255,0.2); transition: all 0.3s;" title="Download">
-                  <i class="fas fa-download text-sm"></i>
-                </button>
-                <button class="w-10 h-10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:scale-110 modal-fullscreen" style="background: rgba(255,255,255,0.2); transition: all 0.3s;" title="Fullscreen">
-                  <i class="fas fa-expand text-sm"></i>
-                </button>
-              </div>
+              <div class="viewer-counter">${showNavigation ? '← → Navigate | ESC Close' : 'ESC to close'}</div>
+            </div>
+            
+            <!-- Control buttons -->
+            <div class="viewer-controls">
+              <button class="viewer-btn" title="Download">
+                <i class="fas fa-download"></i>
+              </button>
+              <button class="viewer-btn" title="Toggle Animation">
+                <i class="fas fa-magic"></i>
+              </button>
+              <button class="viewer-btn" title="Close Viewer">
+                <i class="fas fa-times"></i>
+              </button>
             </div>
           `;
           
-          document.body.appendChild(modal);
+          document.body.appendChild(viewer);
           
-          // Animate in with elastic effect
+          // Create spectral particles
+          this.createSpectralParticles(viewer);
+          
+          // Activate viewer with animations
           setTimeout(() => {
-            modal.classList.remove('opacity-0');
-            modal.querySelector('.modal-content').classList.remove('scale-95');
-            modal.querySelector('.modal-content').classList.add('scale-100');
-          }, 10);
+            viewer.classList.add('active');
+            this.initViewerControls(viewer, src, alt, type, index, imageArray, showNavigation);
+          }, 100);
+        }
+
+        // Create unique spectral particles effect
+        createSpectralParticles(viewer) {
+          const colors = ['#6366f1', '#818cf8', '#a78bfa', '#c4b5fd', '#e879f9'];
           
-          // Store current image index and array for navigation
-          if (showNavigation) {
-            modal.currentImageIndex = index;
-            modal.currentImageArray = imageArray;
-            modal.currentType = type;
+          for (let i = 0; i < 12; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'spectral-particle';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+            particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+            particle.style.animationDelay = Math.random() * 4 + 's';
+            particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            
+            viewer.appendChild(particle);
           }
+        }
+
+        // Initialize viewer controls
+        initViewerControls(viewer, src, alt, type, index, imageArray, showNavigation) {
+          const mainImage = viewer.querySelector('.viewer-main-image');
+          let currentAnimation = 'fractal-zoom';
           
-          // Enhanced close handlers
-          const closeHandlers = () => {
-            modal.querySelector('.modal-content').classList.remove('scale-100');
-            modal.querySelector('.modal-content').classList.add('scale-95');
-            modal.classList.add('opacity-0');
-            setTimeout(() => modal.remove(), 500);
+          // Close functionality
+          const closeViewer = () => {
+            viewer.classList.remove('active');
+            setTimeout(() => viewer.remove(), 600);
           };
           
-          modal.querySelector('.modal-close').addEventListener('click', closeHandlers);
-          modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeHandlers();
-          });
-          
-          // Navigation for ALL image types with multiple images
+          // Navigation for ALL types with multiple images
           if (showNavigation) {
-            modal.querySelector('.modal-nav-prev')?.addEventListener('click', (e) => {
-              e.stopPropagation();
-              modal.currentImageIndex = (modal.currentImageIndex - 1 + modal.currentImageArray.length) % modal.currentImageArray.length;
-              const newImg = modal.currentImageArray[modal.currentImageIndex];
-              modal.querySelector('img').src = newImg.src;
-              modal.querySelector('img').alt = newImg.alt;
-              modal.querySelector('h3').textContent = newImg.alt;
-              // Update counter
-              const infoDiv = modal.querySelector('.ribbon div div');
-              infoDiv.innerHTML = `<span class="capitalize">${modal.currentType}</span><span>•</span><span>Image ${modal.currentImageIndex + 1} of ${modal.currentImageArray.length}</span><span>•</span><span>Use arrow keys to navigate</span>`;
-            });
+            let currentImageIndex = index;
+            const currentImageArray = imageArray;
             
-            modal.querySelector('.modal-nav-next')?.addEventListener('click', (e) => {
-              e.stopPropagation();
-              modal.currentImageIndex = (modal.currentImageIndex + 1) % modal.currentImageArray.length;
-              const newImg = modal.currentImageArray[modal.currentImageIndex];
-              modal.querySelector('img').src = newImg.src;
-              modal.querySelector('img').alt = newImg.alt;
-              modal.querySelector('h3').textContent = newImg.alt;
-              // Update counter
-              const infoDiv = modal.querySelector('.ribbon div div');
-              infoDiv.innerHTML = `<span class="capitalize">${modal.currentType}</span><span>•</span><span>Image ${modal.currentImageIndex + 1} of ${modal.currentImageArray.length}</span><span>•</span><span>Use arrow keys to navigate</span>`;
-            });
+            const navigateImage = (direction) => {
+              currentImageIndex = direction === 'prev' 
+                ? (currentImageIndex - 1 + currentImageArray.length) % currentImageArray.length
+                : (currentImageIndex + 1) % currentImageArray.length;
+              
+              const newImg = currentImageArray[currentImageIndex];
+              mainImage.src = newImg.src;
+              mainImage.alt = newImg.alt;
+              
+              // Update info
+              const infoTitle = viewer.querySelector('.viewer-info h3');
+              const infoDetails = viewer.querySelector('.viewer-info div');
+              infoTitle.textContent = newImg.alt;
+              infoDetails.innerHTML = `<span class="capitalize">${type}</span><span>•</span><span>Image ${currentImageIndex + 1} of ${currentImageArray.length}</span>`;
+              
+              // Re-trigger animation
+              this.triggerAnimationChange(mainImage, currentAnimation);
+            };
+            
+            viewer.querySelector('.viewer-nav.prev').addEventListener('click', () => navigateImage('prev'));
+            viewer.querySelector('.viewer-nav.next').addEventListener('click', () => navigateImage('next'));
           }
           
           // Download functionality
-          modal.querySelector('.modal-download')?.addEventListener('click', (e) => {
-            e.stopPropagation();
+          viewer.querySelector('.viewer-btn:first-child').addEventListener('click', () => {
             const link = document.createElement('a');
             link.href = src;
             link.download = alt || 'image';
             link.click();
           });
           
-          // Fullscreen functionality
-          modal.querySelector('.modal-fullscreen')?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (modal.requestFullscreen) {
-              modal.requestFullscreen();
-            }
+          // Toggle animation
+          viewer.querySelector('.viewer-btn:nth-child(2)').addEventListener('click', () => {
+            const animations = ['fractal-zoom', 'liquid-morph', 'neon-pulse', 'quantum-glow'];
+            const currentIndex = animations.indexOf(currentAnimation);
+            currentAnimation = animations[(currentIndex + 1) % animations.length];
+            
+            mainImage.className = `viewer-main-image ${currentAnimation}`;
+            this.triggerAnimationChange(mainImage, currentAnimation);
           });
           
-          // Keyboard navigation for ALL types with multiple images
+          // Close functionality
+          viewer.querySelector('.viewer-btn:last-child').addEventListener('click', closeViewer);
+          
+          // Keyboard controls
           const keyHandler = (e) => {
             if (e.key === 'Escape') {
-              closeHandlers();
-              document.removeEventListener('keydown', keyHandler);
+              closeViewer();
             } else if (showNavigation && e.key === 'ArrowLeft') {
-              modal.querySelector('.modal-nav-prev')?.click();
+              viewer.querySelector('.viewer-nav.prev')?.click();
             } else if (showNavigation && e.key === 'ArrowRight') {
-              modal.querySelector('.modal-nav-next')?.click();
+              viewer.querySelector('.viewer-nav.next')?.click();
             }
           };
           document.addEventListener('keydown', keyHandler);
+          
+          // Close on background click
+          viewer.addEventListener('click', (e) => {
+            if (e.target === viewer) closeViewer();
+          });
+        }
+
+        // Trigger animation change effect
+        triggerAnimationChange(element, animationClass) {
+          element.style.transform = 'scale(0.8)';
+          setTimeout(() => {
+            element.style.transform = '';
+          }, 200);
         }
 
         // Keyboard navigation
@@ -1886,6 +2238,9 @@
       document.addEventListener('DOMContentLoaded', function() {
         console.log('DOM loaded, initializing features...');
         
+        // Create cosmic background effects
+        createCosmicEffects();
+        
         // Initialize basic features first
         initPhotoRotation();
         initRoleRotation();
@@ -1897,6 +2252,55 @@
           new PortfolioJS();
         }, 100);
       });
+
+      // Create unique cosmic background effects
+      function createCosmicEffects() {
+        console.log('Creating cosmic effects...');
+        
+        // Aurora background
+        const aurora = document.createElement('div');
+        aurora.className = 'aurora-bg';
+        document.body.appendChild(aurora);
+        
+        // Cosmic particles
+        const cosmicContainer = document.createElement('div');
+        cosmicContainer.className = 'cosmic-particles';
+        
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'cosmic-particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 20 + 's';
+          particle.style.animationDuration = (Math.random() * 10 + 20) + 's';
+          particle.style.background = ['#6366f1', '#818cf8', '#a78bfa', '#c4b5fd', '#e879f9'][Math.floor(Math.random() * 5)];
+          
+          cosmicContainer.appendChild(particle);
+        }
+        
+        document.body.appendChild(cosmicContainer);
+        
+        // Floating geometric shapes
+        const shapes = ['triangle', 'square', 'hexagon'];
+        for (let i = 0; i < 5; i++) {
+          const shape = document.createElement('div');
+          shape.className = 'floating-shape';
+          shape.style.cssText = `
+            left: ${Math.random() * 80 + 10}%;
+            top: ${Math.random() * 80 + 10}%;
+            width: ${Math.random() * 50 + 30}px;
+            height: ${Math.random() * 50 + 30}px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            clip-path: ${shapes[i % 3] === 'triangle' ? 'polygon(50% 0%, 0% 100%, 100% 100%)' : 
+                         shapes[i % 3] === 'square' ? 'none' : 
+                         'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)'};
+            animation-delay: ${Math.random() * 10 + 's'};
+            animation-duration: ${Math.random() * 20 + 30 + 's'};
+            opacity: ${Math.random() * 0.1 + 0.05};
+          `;
+          
+          document.body.appendChild(shape);
+        }
+      }
 
       // Form submission feedback
       document.querySelector('form').addEventListener('submit', function(e) {
