@@ -16,14 +16,19 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-me-in-p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-# PythonAnywhere specific configuration
+# Render and PythonAnywhere configuration
 ALLOWED_HOSTS = [
     'sameer07.pythonanywhere.com',  # Your PythonAnywhere username
     'localhost',
     '127.0.0.1',
 ]
 
-# Add your custom domain if you have one
+# Add Render domain
+if os.environ.get('RENDER_SERVICE_ID'):
+    render_domain = f"{os.environ.get('RENDER_SERVICE_ID')}.onrender.com"
+    ALLOWED_HOSTS.append(render_domain)
+
+# Add custom domain if you have one
 if os.environ.get('CUSTOM_DOMAIN'):
     ALLOWED_HOSTS.append(os.environ.get('CUSTOM_DOMAIN'))
 
@@ -69,12 +74,25 @@ WSGI_APPLICATION = 'portfolio_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Use PostgreSQL on Render, SQLite for local development
+if os.environ.get('DB_HOST'):  # Render PostgreSQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
+            'PORT': os.environ.get('DB_PORT'),
+        }
     }
-}
+else:  # Local SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
