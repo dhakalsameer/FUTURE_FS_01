@@ -28,6 +28,12 @@ if os.environ.get('RENDER_SERVICE_ID'):
     render_domain = f"{os.environ.get('RENDER_SERVICE_ID')}.onrender.com"
     ALLOWED_HOSTS.append(render_domain)
 
+# Add all possible Render domains
+ALLOWED_HOSTS.extend([
+    'future-fs-01-a6ek.onrender.com',
+    '*.onrender.com'
+])
+
 # Add custom domain if you have one
 if os.environ.get('CUSTOM_DOMAIN'):
     ALLOWED_HOSTS.append(os.environ.get('CUSTOM_DOMAIN'))
