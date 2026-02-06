@@ -7,7 +7,7 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: portfolio_project.settings_production
+        value: portfolio_project.settings_render
       - key: ALLOWED_HOSTS
         value: future-fs-01-a6ek.onrender.com,.onrender.com,localhost,127.0.0.1
     healthCheckPath: /
