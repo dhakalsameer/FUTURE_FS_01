@@ -21,6 +21,17 @@ if render_domain:
 # Force DEBUG to False for production
 DEBUG = False
 
+# Fix media files for Render
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Serve media files in production (needed for Render)
+if not DEBUG:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 print(f"ALLOWED_HOSTS set to: {ALLOWED_HOSTS}")
 print(f"DEBUG set to: {DEBUG}")
 print(f"Settings module: {__name__}")
+print(f"MEDIA_URL: {MEDIA_URL}")
+print(f"MEDIA_ROOT: {MEDIA_ROOT}")
