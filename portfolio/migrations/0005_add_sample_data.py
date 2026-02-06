@@ -97,7 +97,7 @@ def delete_sample_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('portfolio', '0004_certification_profile_profilephoto_role_and_more'),
+        ('portfolio', '0004_certification_profile_profilephoto_role_skill_and_more'),
     ]
 
     operations = [
