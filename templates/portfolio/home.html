@@ -1275,10 +1275,16 @@
             <div class="photo-rotator w-full h-full rounded-3xl shadow-2xl animate-float">
               {% for photo in photos %}
               <div class="photo-slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}">
+                {% if photo.image %}
                 <img src="{{ photo.image.url }}"
                      class="w-full h-full object-cover rounded-3xl hover:brightness-110 transition-all duration-300" 
                      alt="{{ profile.full_name }} - Photo {{ forloop.counter }}"
                      title="Click to view full size" />
+                {% else %}
+                <div class="w-full h-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-light)] flex items-center justify-center rounded-3xl">
+                  <i class="fas fa-user text-6xl text-white"></i>
+                </div>
+                {% endif %}
               </div>
               {% empty %}
               <!-- Default placeholder if no photos -->
@@ -2467,12 +2473,20 @@
           </button>
         </div>
         <div class="resume-body">
+          {% if profile.resume %}
           <iframe src="{{ profile.resume.url }}" class="resume-iframe" title="Resume Preview"></iframe>
+          {% else %}
+          <div class="flex items-center justify-center h-full">
+            <p class="text-muted">Resume not available</p>
+          </div>
+          {% endif %}
         </div>
         <div class="resume-controls">
+          {% if profile.resume %}
           <a href="{{ profile.resume.url }}" download class="resume-btn">
             <i class="fas fa-download"></i> Download PDF
           </a>
+          {% endif %}
           <button onclick="openResumeInNewTab()" class="resume-btn">
             <i class="fas fa-external-link-alt"></i> Open in New Tab
           </button>
@@ -2498,7 +2512,9 @@
       }
 
       function openResumeInNewTab() {
+        {% if profile.resume %}
         window.open('{{ profile.resume.url }}', '_blank');
+        {% endif %}
       }
 
       // Close modal on escape key

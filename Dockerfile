@@ -12,10 +12,15 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy application code
 COPY . .
 
 # Make start script executable
 RUN chmod +x start.sh
+
+# Ensure media directory exists and copy media files
+RUN mkdir -p media
+RUN cp -r media/* media/ 2>/dev/null || true
 
 RUN python manage.py collectstatic --noinput
 
