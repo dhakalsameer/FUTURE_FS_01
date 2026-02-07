@@ -6,24 +6,37 @@ from .models import Profile, Project, Skill, Role, ProfilePhoto, Certification
 
 
 def home(request):
-    profile = Profile.objects.first()
-    projects = Project.objects.all()
-    skills = Skill.objects.all()
-    roles = Role.objects.all()
-    certifications = Certification.objects.all()
+    try:
+        profile = Profile.objects.first()
+        projects = Project.objects.all()
+        skills = Skill.objects.all()
+        roles = Role.objects.all()
+        certifications = Certification.objects.all()
 
-    photos = ProfilePhoto.objects.filter(profile=profile).order_by('order') if profile else []
+        photos = ProfilePhoto.objects.filter(profile=profile).order_by('order') if profile else []
 
-
-    context = {
-        "profile": profile,
-        "projects": projects,
-        "skills": skills,
-        "photos": photos,
-        "roles": roles,
-        "certifications": certifications,
-        'is_linux': False,
-    }
+        context = {
+            "profile": profile,
+            "projects": projects,
+            "skills": skills,
+            "photos": photos,
+            "roles": roles,
+            "certifications": certifications,
+            'is_linux': False,
+        }
+    except Exception as e:
+        # Fallback data if database is not working
+        print(f"Database error: {e}")
+        context = {
+            "profile": None,
+            "projects": [],
+            "skills": [],
+            "photos": [],
+            "roles": [],
+            "certifications": [],
+            'is_linux': False,
+            'error': 'Database connection failed'
+        }
 
     return render(request, "portfolio/home.html", context)
 
