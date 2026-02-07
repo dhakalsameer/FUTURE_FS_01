@@ -21,6 +21,11 @@ if [ -f "portfolio_data.json" ]; then
     echo "Importing real portfolio data..."
     python manage.py import_data || echo "Import failed, trying sample data..."
     python manage.py create_sample_data || echo "Sample data creation also failed"
+    
+    # Fix media file associations
+    echo "Fixing media file associations..."
+    python manage.py fix_media_files || echo "Media fix failed"
+    python manage.py fix_double_paths || echo "Path fix failed"
 else
     echo "No real data found, creating sample data..."
     python manage.py create_sample_data || echo "Sample data creation failed"
