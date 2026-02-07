@@ -1,0 +1,123 @@
+{
+  "profiles": [
+    {
+      "full_name": "Sameer Dhakal",
+      "title": "Web Developer",
+      "bio": "A backend-focused Web Developer & Web3 Enthusiast from Nepal 🇳🇵.",
+      "about": "I’m Sameer Dhakal, a backend-focused Web Developer and Web3 enthusiast with a passion for building scalable, functional, and production-ready web applications.\r\n\r\nMy core strength is in backend development, where I work with technologies like Python (Django/Flask), JavaScript (Node.js/Express), and PHP to design systems that handle authentication, role-based access, booking logic, dashboards, and APIs. I enjoy turning complex requirements into clean, maintainable code.",
+      "email": "sameerdhakal1234@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/sameer-dhakal-712b69301/",
+      "github": "https://github.com/dhakalsameer",
+      "facebook": "https://www.facebook.com/sameer.samir.296917",
+      "resume": "resume/Sameer_Dhakal_Resume.pdf"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Django Reservation System",
+      "description": "A modern Reservation Management System built with Django + TailwindCSS, allowing users to register, log in, and manage reservations easily.\r\nDeployed live on Render.",
+      "tech_stack": "Django, HTML, CSS",
+      "github_link": "https://github.com/dhakalsameer/django_reservation_system",
+      "live_link": "https://django-reservation-system.onrender.com",
+      "image": "projects/django.png",
+      "created_at": "2026-02-04T09:49:27.976634+00:00"
+    },
+    {
+      "title": "Local Services Marketplace",
+      "description": "This is a web-based marketplace where service providers (plumbers, electricians, tutors, cleaners, freelancers, etc.) can list their services, and customers can search, book, and review them.\r\n\r\nThe goal of this project is to demonstrate:\r\n\r\nReal business logic\r\nRole-based authentication & permissions\r\nBooking & availability systems\r\nScalable backend thinking with Django",
+      "tech_stack": "Django, HTML, CSS",
+      "github_link": "https://github.com/dhakalsameer/djagno_local_services",
+      "live_link": null,
+      "image": "projects/Screenshot_from_2026-01-30_11-26-25.png",
+      "created_at": "2026-02-04T10:03:33.157030+00:00"
+    },
+    {
+      "title": "PHP Blog Project",
+      "description": "A simple, dynamic Blog Management System built using PHP, MySQL, and Bootstrap.\r\nThis project demonstrates CRUD operations, authentication, and responsive design .",
+      "tech_stack": "Frontend: HTML, CSS, JavaScript (Vanilla) Backend: PHP Database: MySQL",
+      "github_link": "https://github.com/dhakalsameer/projectII_php_blog",
+      "live_link": null,
+      "image": "projects/php.png",
+      "created_at": "2026-02-04T16:50:42.804450+00:00"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Python",
+      "icon": "skills/Python-logo.jpg"
+    },
+    {
+      "name": "Django",
+      "icon": "skills/djan.png"
+    },
+    {
+      "name": "Linux",
+      "icon": "skills/linux.png"
+    },
+    {
+      "name": "MySQL",
+      "icon": "skills/mysql.png"
+    },
+    {
+      "name": "PHP",
+      "icon": "skills/php.png"
+    }
+  ],
+  "roles": [
+    {
+      "title": "Backend Developer"
+    },
+    {
+      "title": "Web3 Explorer"
+    },
+    {
+      "title": "Django Developer"
+    },
+    {
+      "title": "Linux enthusiastic"
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Responsive Web Design",
+      "description": "Fundamentals of HTML and CSS, including modern layout, design, accessibility, and responsive web development.",
+      "issuer": "freeCodeCamp",
+      "date_awarded": "2026-01-19",
+      "certificate_url": "https://www.freecodecamp.org/certification/fccc4c78805-4778-4827-bf62-8523b263ee78/responsive-web-design-v9",
+      "image": "certifications/responsive.png"
+    },
+    {
+      "title": "Python",
+      "description": "fundamentals of Python programming.",
+      "issuer": "freeCodeCamp",
+      "date_awarded": "2026-01-19",
+      "certificate_url": "https://www.freecodecamp.org/certification/fccc4c78805-4778-4827-bf62-8523b263ee78/python-v9",
+      "image": "certifications/python_certificate.png"
+    },
+    {
+      "title": "YAML Foundation",
+      "description": "Teaches the YAML foundation course for the DevOps skills",
+      "issuer": "Udemy",
+      "date_awarded": "2026-01-16",
+      "certificate_url": "https://www.udemy.com/certificate/UC-52b48b37-12bf-40f1-b418-a4039b65f279/",
+      "image": "certifications/yaml.jpg"
+    }
+  ],
+  "profile_photos": [
+    {
+      "profile_full_name": "Sameer Dhakal",
+      "image": "profile_photos/spin.jpg",
+      "order": 0
+    },
+    {
+      "profile_full_name": "Sameer Dhakal",
+      "image": "profile_photos/saa.jpg",
+      "order": 1
+    },
+    {
+      "profile_full_name": "Sameer Dhakal",
+      "image": "profile_photos/sasa.jpg",
+      "order": 2
+    }
+  ]
+}
