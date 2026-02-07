@@ -104,5 +104,4 @@ class Migration(migrations.Migration):
         migrations.RunPython(create_sample_data, delete_sample_data),
     ]
 
-    operations = [
-    ]
+    
